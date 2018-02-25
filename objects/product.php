@@ -49,7 +49,7 @@ class Product{
         $query = "INSERT INTO
                 " . $this->table_name . "
             SET
-                name=:name, price=:price, description=:description, category_id=:category_id, created=:created";
+                name=:name, price=:price, description=:description, category_id=:category_id, created=NOW()";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
@@ -59,14 +59,14 @@ class Product{
         $this->price=htmlspecialchars(strip_tags($this->price));
         $this->description=htmlspecialchars(strip_tags($this->description));
         $this->category_id=htmlspecialchars(strip_tags($this->category_id));
-        $this->created=htmlspecialchars(strip_tags($this->created));
+        //$this->created=htmlspecialchars(strip_tags($this->created));
 
         // bind values
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":price", $this->price);
         $stmt->bindParam(":description", $this->description);
         $stmt->bindParam(":category_id", $this->category_id);
-        $stmt->bindParam(":created", $this->created);
+        //$stmt->bindParam(":created", $this->created);
 
         // execute query
         if($stmt->execute()){

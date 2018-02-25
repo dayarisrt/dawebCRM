@@ -6,38 +6,35 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-// include database and object files
+
+// include database and object file
 include_once '../config/database.php';
-include_once '../objects/product.php';
+include_once '../objects/user.php';
 
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
 
 // prepare product object
-$product = new Product($db);
+$user = new User($db);
 
-// get posted data
+// get user id
 $data = json_decode(file_get_contents("php://input"));
 
-// set product property values
-$product->name = $data->name;
-$product->price = $data->price;
-$product->description = $data->description;
-$product->category_id = $data->category_id;
-//$product->created = date('Y-m-d H:i:s');
+// set user id to be deleted
+$user->id = $data->id;
 
-// create the product
-if($product->create()){
+// delete the user
+if($user->delete()){
     echo '{';
-    echo '"message": "Product was created."';
+    echo '"message": "User was deleted."';
     echo '}';
 }
 
-// if unable to create the product, tell the user
+// if unable to delete the user
 else{
     echo '{';
-    echo '"message": "Unable to create product."';
+    echo '"message": "Unable to delete user."';
     echo '}';
 }
 ?>

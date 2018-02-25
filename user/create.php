@@ -8,36 +8,39 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/product.php';
+include_once '../objects/user.php';
 
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
 
-// prepare product object
-$product = new Product($db);
+// prepare user object
+$user = new User($db);
 
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
-// set product property values
-$product->name = $data->name;
-$product->price = $data->price;
-$product->description = $data->description;
-$product->category_id = $data->category_id;
-//$product->created = date('Y-m-d H:i:s');
+// set user property values
+$user->cedula = $data->cedula;
+$user->nombre = $data->nombre;
+$user->apellido = $data->apellido;
+$user->telefono = $data->telefono;
+$user->email = $data->email;
+$user->fecha_nacimiento = $data->fecha_nacimiento;
+$user->rol = $data->rol;
+$user->fecha_ingreso = $data->fecha_ingreso;
 
-// create the product
-if($product->create()){
+// create the user
+if($user->create()){
     echo '{';
-    echo '"message": "Product was created."';
+    echo '"message": "User was created."';
     echo '}';
 }
 
 // if unable to create the product, tell the user
 else{
     echo '{';
-    echo '"message": "Unable to create product."';
+    echo '"message": "Unable to create user."';
     echo '}';
 }
 ?>
