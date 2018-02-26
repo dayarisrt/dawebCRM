@@ -1,5 +1,5 @@
-// component that contains the logic to create a product
-window.CreateProductComponent = React.createClass({
+// component that contains the logic to create a user
+window.CreateUserComponent = React.createClass({
     // initialize values
     getInitialState: function() {
         return {
@@ -21,7 +21,7 @@ window.CreateProductComponent = React.createClass({
                 });
             }.bind(this));
 
-        $('.page-header h1').text('Create product');
+        $('.page-header h1').text('Create user');
     },
 
 // on unmount, stop getting categories in case the request is still loading
@@ -114,7 +114,7 @@ window.CreateProductComponent = React.createClass({
         <a href='#'
         onClick={() => this.props.changeAppMode('read')}
         className='btn btn-primary margin-bottom-1em'>
-            Read Products
+            Ver Usuarios
         </a>
 
         <form onSubmit={this.onSave}>

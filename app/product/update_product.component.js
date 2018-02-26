@@ -9,7 +9,6 @@ window.UpdateProductComponent = React.createClass({
             id: 0,
             name: '',
             estatus: '',
-            price: 0,
             successUpdate: null
         };
     },
@@ -32,10 +31,9 @@ window.UpdateProductComponent = React.createClass({
                 this.setState({id: product.id});
                 this.setState({name: product.name});
                 this.setState({estatus: product.estatus});
-                this.setState({price: product.price});
             }.bind(this));
 
-        $('.page-header h1').text('Update product');
+        $('.page-header h1').text('Modificar Artículo');
     },
 
 // on unmount, kill categories fetching in case the request is still pending
@@ -54,14 +52,9 @@ window.UpdateProductComponent = React.createClass({
         this.setState({name: e.target.value});
     },
 
-// handle description change
-    onDescriptionChange: function(e){
+// handle estatus change
+    onEstatusChange: function(e){
         this.setState({estatus: e.target.value});
-    },
-
-// handle price change
-    onPriceChange: function(e){
-        this.setState({price: e.target.value});
     },
 
 // handle save changes button clicked
@@ -72,7 +65,6 @@ window.UpdateProductComponent = React.createClass({
             id: this.state.id,
             name: this.state.name,
             estatus: this.state.estatus,
-            price: this.state.price,
             category_id: this.state.selectedCategoryId
         };
 
@@ -108,7 +100,7 @@ window.UpdateProductComponent = React.createClass({
         {
             this.state.successUpdate == "Producto creado." ?
         <div className='alert alert-success'>
-            Producto actualizado exitosamente.
+            Artículo actualizado exitosamente.
         </div>
         : null
     }
@@ -116,7 +108,7 @@ window.UpdateProductComponent = React.createClass({
         {
             this.state.successUpdate == "Unable to update product." ?
         <div className='alert alert-danger'>
-            Unable to update product. Please try again.
+            Error al registrar el artículo. Por favor intente nuevamente.
         </div>
         : null
         }
@@ -124,7 +116,7 @@ window.UpdateProductComponent = React.createClass({
         <a href='#'
         onClick={() => this.props.changeAppMode('read')}
         className='btn btn-primary margin-bottom-1em'>
-            Read Products
+            Ver Artículos
         </a>
 
         <form onSubmit={this.onSave}>
@@ -156,26 +148,13 @@ window.UpdateProductComponent = React.createClass({
         </tr>
 
         <tr>
-        <td>Price ($)</td>
-        <td>
-        <input
-        type='number'
-        step="0.01"
-        className='form-control'
-        value={this.state.price}
-        required
-        onChange={this.onPriceChange}/>
-        </td>
-        </tr>
-
-        <tr>
-        <td>Category</td>
+        <td>Categoría</td>
         <td>
         <select
         onChange={this.onCategoryChange}
         className='form-control'
         value={this.state.selectedCategoryId}>
-        <option value="-1">Select category...</option>
+        <option value="-1">Seleccione Categoria...</option>
         {categoriesOptions}
         </select>
         </td>
@@ -186,7 +165,7 @@ window.UpdateProductComponent = React.createClass({
         <td>
         <button
         className='btn btn-primary'
-        onClick={this.onSave}>Save Changes</button>
+        onClick={this.onSave}>Guardar Cambios</button>
         </td>
         </tr>
         </tbody>

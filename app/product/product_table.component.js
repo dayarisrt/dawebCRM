@@ -14,15 +14,15 @@ window.ProductsTable = React.createClass({
 
         return(
                 !rows.length
-                    ? <div className='alert alert-danger'>No products found.</div>
+                    ? <div className='alert alert-danger'>No hay productos registrados.</div>
         :
         <table className='table table-bordered table-hover'>
             <thead>
             <tr>
             <th>Articulo</th>
             <th>Estatus</th>
-            <th>Category</th>
-            <th>Action</th>
+            <th>Categoría</th>
+            <th>Acción</th>
             </tr>
             </thead>
             <tbody>
