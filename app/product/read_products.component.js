@@ -26,7 +26,7 @@ window.ReadProductsComponent = React.createClass({
     render: function() {
         // list of products
         var filteredProducts = this.state.products;
-        $('.page-header h1').text('Read Products');
+        $('.page-header h1').text('Artículos');
 
         return (
             <div className='overflow-hidden'>

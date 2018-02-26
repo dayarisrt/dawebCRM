@@ -6,7 +6,7 @@ window.CreateProductComponent = React.createClass({
             categories: [],
             selectedCategoryId: -1,
             name: '',
-            estatus: '',
+            estatus: -1,
             successCreate: null
         };
     },
@@ -39,8 +39,8 @@ window.CreateProductComponent = React.createClass({
         this.setState({name: e.target.value});
     },
 
-// handle description change
-    onDescriptionChange: function(e){
+// handle estatus change
+    onEstatusChange: function(e){
         this.setState({estatus: e.target.value});
     },
 
@@ -51,7 +51,6 @@ window.CreateProductComponent = React.createClass({
         var form_data={
             name: this.state.name,
             estatus: this.state.estatus,
-            price: this.state.price,
             category_id: this.state.selectedCategoryId
         };
 
@@ -66,8 +65,7 @@ window.CreateProductComponent = React.createClass({
                 this.setState({successCreate: response['message']});
                 //empty form
                 this.setState({name: ""});
-                this.setState({estatus: ""});
-                this.setState({price: ""});
+                this.setState({estatus: -1});
                 this.setState({selectedCategoryId: -1});
             }.bind(this),
             error: function(xhr, resp, text){
@@ -98,7 +96,7 @@ window.CreateProductComponent = React.createClass({
         {
             this.state.successCreate== "Product was created." ?
         <div className='alert alert-success'>
-            Product was saved.
+            ¡Artículo registrado existosamente!
         </div>
         : null
     }
@@ -106,7 +104,7 @@ window.CreateProductComponent = React.createClass({
         {
             this.state.successCreate == "Unable to create product." ?
         <div className='alert alert-danger'>
-            Unable to save product. Please try again.
+            Error al registrar el artículo. Por favor intente nuevamente.
         </div>
         : null
         }
@@ -114,14 +112,14 @@ window.CreateProductComponent = React.createClass({
         <a href='#'
         onClick={() => this.props.changeAppMode('read')}
         className='btn btn-primary margin-bottom-1em'>
-            Read Products
+            Artículos
         </a>
 
         <form onSubmit={this.onSave}>
         <table className='table table-bordered table-hover'>
             <tbody>
             <tr>
-            <td>Name</td>
+            <td>Nombre</td>
             <td>
             <input
         type='text'
@@ -136,28 +134,15 @@ window.CreateProductComponent = React.createClass({
         <td>Estatus</td>
         <td>
         <select
-        onChange={this.onCategoryChange}
+        onChange={this.onEstatusChange}
         className='form-control'
-        value={this.state.selectedCategoryId}>
-        <option value="-1">Select estatus...</option>
+        value={this.state.estatus}>
+        <option value="-1">Seleccione un estatus...</option>
         <option value="0">Sin Asignar</option>
         <option value="1">Borrador</option>
         <option value="2">Pdt Validar</option>
             <option value="3">Correcciones</option>
         </select>
-        </td>
-        </tr>
-
-        <tr>
-        <td>Price ($)</td>
-        <td>
-        <input
-        type='number'
-        step="0.01"
-        className='form-control'
-        value={this.state.price}
-        required
-        onChange={this.onPriceChange}/>
         </td>
         </tr>
 
@@ -168,7 +153,7 @@ window.CreateProductComponent = React.createClass({
         onChange={this.onCategoryChange}
         className='form-control'
         value={this.state.selectedCategoryId}>
-        <option value="-1">Select category...</option>
+        <option value="-1">Seleccione una categoría...</option>
         {categoriesOptions}
         </select>
         </td>
@@ -179,7 +164,7 @@ window.CreateProductComponent = React.createClass({
         <td>
         <button
         className='btn btn-primary'
-        onClick={this.onSave}>Save</button>
+        onClick={this.onSave}>Registrar</button>
         </td>
         </tr>
         </tbody>

@@ -1,37 +1,43 @@
-// component that contains the logic to read one product
-window.ReadOneProductComponent = React.createClass({
+// component that contains the logic to read one user
+window.ReadOneUserComponent = React.createClass({
     getInitialState: function() {
         // Get this product fields from the data attributes we set on the
         // #content div, using jQuery
         return {
             id: 0,
-            name: '',
-            description: '',
-            price: 0,
-            category_name: ''
+            cedula: '',
+            nombre: '',
+            apellido: '',
+            telefono: '',
+            email: '',
+            fecha_nacimiento: '',
+            rol: '',
+            fecha_ingreso: ''
         };
     },
 
-// on mount, read product data and them as this component's state
+// on mount, read user data and them as this component's state
     componentDidMount: function(){
 
-        var productId = this.props.productId;
+        var userId = this.props.userId;
 
-        this.serverRequestProd = $.get("http://localhost/api-php/product/read_one.php?id=" + productId,
-            function (product) {
-                this.setState({category_name: product.category_name});
-                this.setState({id: product.id});
-                this.setState({name: product.name});
-                this.setState({description: product.description});
-                this.setState({price: product.price});
+        this.serverRequestUsr = $.get("http://localhost/api-php/user/read_one.php?id=" + userId,
+            function (user) {
+                this.setState({category_name: user.category_name});
+                this.setState({id: user.id});
+                this.setState({cedila: user.cedula});
+                this.setState({nombre: user.nombre});
+                this.setState({apellido: user.apellido});
+                this.setState({telefono: user.telefono});
+                this.setState({fecha_nacimiento: user.fecha_nacimiento});
             }.bind(this));
 
-        $('.page-header h1').text('Read Product');
+        $('.page-header h1').text('Ver Usuario');
     },
 
 // on unmount, kill categories fetching in case the request is still pending
     componentWillUnmount: function() {
-        this.serverRequestProd.abort();
+        this.serverRequestUsr.abort();
     },
 
     render: function() {
@@ -39,32 +45,52 @@ window.ReadOneProductComponent = React.createClass({
         return (
             <div>
             <a href='#'
-        onClick={() => this.props.changeAppMode('read')}
+        onClick={() => this.props.changeAppMode('readUsers')}
         className='btn btn-primary margin-bottom-1em'>
-            Read Products
+            Ver Usuarios
         </a>
 
         <form onSubmit={this.onSave}>
         <table className='table table-bordered table-hover'>
             <tbody>
             <tr>
-            <td>Name</td>
-            <td>{this.state.name}</td>
+            <td>Cedula</td>
+            <td>{this.state.cedula}</td>
         </tr>
 
         <tr>
-        <td>Description</td>
-        <td>{this.state.description}</td>
+        <td>Nombre</td>
+        <td>{this.state.nombre}</td>
         </tr>
 
         <tr>
-        <td>Price ($)</td>
-        <td>${parseFloat(this.state.price).toFixed(2)}</td>
+        <td>Apellido</td>
+        <td>{this.state.apellido}</td>
         </tr>
 
         <tr>
-        <td>Category</td>
-        <td>{this.state.category_name}</td>
+        <td>Telefono</td>
+        <td>{this.state.telefono}</td>
+        </tr>
+
+        <tr>
+        <td>Email</td>
+        <td>{this.state.email}</td>
+        </tr>
+
+        <tr>
+        <td>Fecha de Nacimiento</td>
+        <td>{this.state.fecha_nacimiento}</td>
+        </tr>
+
+        <tr>
+        <td>Rol</td>
+        <td>{this.state.rol}</td>
+        </tr>
+
+        <tr>
+        <td>Fecha de Ingreso</td>
+        <td>{this.state.fecha_ingreso}</td>
         </tr>
 
         </tbody>

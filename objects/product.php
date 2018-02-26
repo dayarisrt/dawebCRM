@@ -8,8 +8,7 @@ class Product{
     // object properties
     public $id;
     public $name;
-    public $description;
-    public $price;
+    public $estatus;
     public $category_id;
     public $category_name;
     public $created;
@@ -24,7 +23,7 @@ class Product{
 
         // select all query
         $query = "SELECT
-                c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
+                c.name as category_name, p.id, p.name, p.estatus, p.category_id, p.created
             FROM
                 " . $this->table_name . " p
                 LEFT JOIN
@@ -49,24 +48,20 @@ class Product{
         $query = "INSERT INTO
                 " . $this->table_name . "
             SET
-                name=:name, price=:price, description=:description, category_id=:category_id, created=NOW()";
+                name=:name, estatus=:estatus, category_id=:category_id, created=NOW()";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
 
         // sanitize
         $this->name=htmlspecialchars(strip_tags($this->name));
-        $this->price=htmlspecialchars(strip_tags($this->price));
-        $this->description=htmlspecialchars(strip_tags($this->description));
+        $this->estatus=htmlspecialchars(strip_tags($this->estatus));
         $this->category_id=htmlspecialchars(strip_tags($this->category_id));
-        //$this->created=htmlspecialchars(strip_tags($this->created));
 
         // bind values
         $stmt->bindParam(":name", $this->name);
-        $stmt->bindParam(":price", $this->price);
-        $stmt->bindParam(":description", $this->description);
+        $stmt->bindParam(":estatus", $this->estatus);
         $stmt->bindParam(":category_id", $this->category_id);
-        //$stmt->bindParam(":created", $this->created);
 
         // execute query
         if($stmt->execute()){
@@ -82,7 +77,7 @@ class Product{
 
         // query to read single record
         $query = "SELECT
-                c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
+                c.name as category_name, p.id, p.name, p.estatus, p.category_id, p.created
             FROM
                 " . $this->table_name . " p
                 LEFT JOIN
@@ -107,8 +102,7 @@ class Product{
 
         // set values to object properties
         $this->name = $row['name'];
-        $this->price = $row['price'];
-        $this->description = $row['description'];
+        $this->estatus = $row['estatus'];
         $this->category_id = $row['category_id'];
         $this->category_name = $row['category_name'];
     }
@@ -121,8 +115,7 @@ class Product{
                 " . $this->table_name . "
             SET
                 name = :name,
-                price = :price,
-                description = :description,
+                estatus = :estatus,
                 category_id = :category_id
             WHERE
                 id = :id";
@@ -132,15 +125,13 @@ class Product{
 
         // sanitize
         $this->name=htmlspecialchars(strip_tags($this->name));
-        $this->price=htmlspecialchars(strip_tags($this->price));
-        $this->description=htmlspecialchars(strip_tags($this->description));
+        $this->estatus=htmlspecialchars(strip_tags($this->estatus));
         $this->category_id=htmlspecialchars(strip_tags($this->category_id));
         $this->id=htmlspecialchars(strip_tags($this->id));
 
         // bind new values
         $stmt->bindParam(':name', $this->name);
-        $stmt->bindParam(':price', $this->price);
-        $stmt->bindParam(':description', $this->description);
+        $stmt->bindParam(':estatus', $this->estatus);
         $stmt->bindParam(':category_id', $this->category_id);
         $stmt->bindParam(':id', $this->id);
 
@@ -181,7 +172,7 @@ class Product{
 
         // select all query
         $query = "SELECT
-                c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
+                c.name as category_name, p.id, p.name, p.estatus, p.category_id, p.created
             FROM
                 " . $this->table_name . " p
                 LEFT JOIN
@@ -215,7 +206,7 @@ class Product{
 
         // select query
         $query = "SELECT
-                c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
+                c.name as category_name, p.id, p.name, p.estatus, p.category_id, p.created
             FROM
                 " . $this->table_name . " p
                 LEFT JOIN

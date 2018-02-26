@@ -1,5 +1,5 @@
 // component that contains the logic to update a product
-window.UpdateProductComponent = React.createClass({
+window.UpdateUserComponent = React.createClass({
     getInitialState: function() {
         // Get this product fields from the data attributes we set on the
         // #content div, using jQuery
@@ -35,7 +35,7 @@ window.UpdateProductComponent = React.createClass({
                 this.setState({price: product.price});
             }.bind(this));
 
-        $('.page-header h1').text('Update product');
+        $('.page-header h1').text('Modificar Usuario');
     },
 
 // on unmount, kill categories fetching in case the request is still pending
@@ -156,20 +156,7 @@ window.UpdateProductComponent = React.createClass({
         </tr>
 
         <tr>
-        <td>Price ($)</td>
-        <td>
-        <input
-        type='number'
-        step="0.01"
-        className='form-control'
-        value={this.state.price}
-        required
-        onChange={this.onPriceChange}/>
-        </td>
-        </tr>
-
-        <tr>
-        <td>Category</td>
+        <td>Categoría</td>
         <td>
         <select
         onChange={this.onCategoryChange}

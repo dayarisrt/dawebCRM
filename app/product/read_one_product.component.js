@@ -7,7 +7,6 @@ window.ReadOneProductComponent = React.createClass({
             id: 0,
             name: '',
             estatus: '',
-            price: 0,
             category_name: ''
         };
     },
@@ -22,11 +21,25 @@ window.ReadOneProductComponent = React.createClass({
                 this.setState({category_name: product.category_name});
                 this.setState({id: product.id});
                 this.setState({name: product.name});
-                this.setState({estatus: product.estatus});
-                this.setState({price: product.price});
+                if(product.estatus==0) {
+                    this.setState({estatus: 'Sin Asignar'});
+                    this.setState({style_estatus: {color: '#ddd'}});
+                }
+                else if (product.estatus==1) {
+                    this.setState({estatus: 'Borrador'});
+                    this.setState({style_estatus: {color: '#337ab7'}});
+                }
+                else if (product.estatus==2) {
+                    this.setState({estatus: 'Pdt Validar'});
+                    this.setState({style_estatus: {color: '#52bb56'}});
+                }
+                else if (product.estatus==3) {
+                    this.setState({estatus: 'Correcciones'});
+                    this.setState({style_estatus: {color: '#ef5350'}});
+                }
             }.bind(this));
 
-        $('.page-header h1').text('Read Product');
+        $('.page-header h1').text('Ver Artículo');
     },
 
 // on unmount, kill categories fetching in case the request is still pending
@@ -41,29 +54,24 @@ window.ReadOneProductComponent = React.createClass({
             <a href='#'
         onClick={() => this.props.changeAppMode('read')}
         className='btn btn-primary margin-bottom-1em'>
-            Read Products
+            Ver Artículos
         </a>
 
         <form onSubmit={this.onSave}>
         <table className='table table-bordered table-hover'>
             <tbody>
             <tr>
-            <td>Name</td>
+            <td>Nombre</td>
             <td>{this.state.name}</td>
         </tr>
 
         <tr>
         <td>Estatus</td>
-        <td>{this.state.estatus}</td>
+        <td><span style={this.state.style_estatus}>{this.state.estatus}</span></td>
         </tr>
 
         <tr>
-        <td>Price ($)</td>
-        <td>${parseFloat(this.state.price).toFixed(2)}</td>
-        </tr>
-
-        <tr>
-        <td>Category</td>
+        <td>Categoría</td>
         <td>{this.state.category_name}</td>
         </tr>
 

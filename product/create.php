@@ -22,22 +22,20 @@ $data = json_decode(file_get_contents("php://input"));
 
 // set product property values
 $product->name = $data->name;
-$product->price = $data->price;
-$product->description = $data->description;
+$product->estatus = $data->estatus;
 $product->category_id = $data->category_id;
-//$product->created = date('Y-m-d H:i:s');
 
 // create the product
 if($product->create()){
     echo '{';
-    echo '"message": "Product was created."';
+    echo '"message": "Erticulo registrado exitosamente."';
     echo '}';
 }
 
 // if unable to create the product, tell the user
 else{
     echo '{';
-    echo '"message": "Unable to create product."';
+    echo '"message": "Error al registrar articulo."';
     echo '}';
 }
 ?>

@@ -37,8 +37,7 @@ if($num>0){
         $product_item=array(
             "id" => $id,
             "name" => $name,
-            "description" => html_entity_decode($description),
-            "price" => $price,
+            "estatus" => $estatus,
             "category_id" => $category_id,
             "category_name" => $category_name
         );
@@ -51,7 +50,7 @@ if($num>0){
 
 else{
     echo json_encode(
-        array("message" => "No products found.")
+        array("message" => "No hay articulos registrados.")
     );
 }
 ?>
