@@ -3,10 +3,14 @@ window.CreateUserComponent = React.createClass({
     // initialize values
     getInitialState: function() {
         return {
-            categories: [],
-            selectedCategoryId: -1,
-            name: '',
-            estatus: '',
+            cedula: '',
+            nombre: '',
+            apellido: '',
+            telefono: '',
+            email: '',
+            fecha_nacimiento: '',
+            rol: '',
+            fecha_ingreso: '',
             successCreate: null
         };
     },
@@ -21,7 +25,7 @@ window.CreateUserComponent = React.createClass({
                 });
             }.bind(this));
 
-        $('.page-header h1').text('Create user');
+        $('.page-header h1').text('Crear Usuario');
     },
 
 // on unmount, stop getting categories in case the request is still loading
@@ -29,19 +33,44 @@ window.CreateUserComponent = React.createClass({
         this.serverRequest.abort();
     },
 
-// handle category change
-    onCategoryChange: function(e){
-        this.setState({selectedCategoryId: e.target.value});
+// handle cedula
+    onCedulaChange: function(e){
+        this.setState({cedula: e.target.value});
     },
 
-// handle name change
-    onNameChange: function(e){
-        this.setState({name: e.target.value});
+// handle nombre change
+    onNombreChange: function(e){
+        this.setState({nombre: e.target.value});
     },
 
-// handle description change
-    onDescriptionChange: function(e){
-        this.setState({estatus: e.target.value});
+// handle apellido change
+    onApellidoChange: function(e){
+        this.setState({apellido: e.target.value});
+    },
+
+    // handle telefono
+    onTelefonoChange: function(e){
+        this.setState({telefono: e.target.value});
+    },
+
+    // handle email
+    onEmailChange: function(e){
+        this.setState({email: e.target.value});
+    },
+
+    // handle fecha de nacimiento
+    onFechaNacimientoChange: function(e){
+        this.setState({fecha_nacimiento: e.target.value});
+    },
+
+    // handle rol
+    onRolChange: function(e){
+        this.setState({rol: e.target.value});
+    },
+
+    // handle fecha de ingreso
+    onFechaIngresoChange: function(e){
+        this.setState({fecha_ingreso: e.target.value});
     },
 
 // handle save button clicked
@@ -49,15 +78,19 @@ window.CreateUserComponent = React.createClass({
 
         // data in the form
         var form_data={
-            name: this.state.name,
-            estatus: this.state.estatus,
-            price: this.state.price,
-            category_id: this.state.selectedCategoryId
+            cedula: this.state.cedula,
+            nombre: this.state.nombre,
+            apellido: this.state.apellido,
+            telefono: this.state.telefono,
+            email: this.state.email,
+            fecha_nacimiento: this.state.fecha_nacimiento,
+            rol: this.state.rol,
+            fecha_ingreso: this.state.fecha_ingreso,
         };
 
         // submit form data to api
         $.ajax({
-            url: "http://localhost/api-php/product/create.php",
+            url: "http://localhost/api-php/user/create.php",
             type : "POST",
             contentType : 'application/json',
             data : JSON.stringify(form_data),
@@ -65,10 +98,14 @@ window.CreateUserComponent = React.createClass({
                 // api message
                 this.setState({successCreate: response['message']});
                 //empty form
-                this.setState({name: ""});
-                this.setState({estatus: ""});
-                this.setState({price: ""});
-                this.setState({selectedCategoryId: -1});
+                this.setState({cedula: ""});
+                this.setState({nombre: ""});
+                this.setState({apellido: ""});
+                this.setState({telefono: ""});
+                this.setState({email: ""});
+                this.setState({fecha_nacimiento: ""});
+                this.setState({rol: -1});
+                this.setState({fecha_ingreso: ""});
             }.bind(this),
             error: function(xhr, resp, text){
                 // show error to console
@@ -80,25 +117,19 @@ window.CreateUserComponent = React.createClass({
     },
 
     render: function() {
-        // make categories as option for the select tag.
-        var categoriesOptions = this.state.categories.map(function(category){
-            return (
-                <option key={category.id} value={category.id}>{category.name}</option>
-            );
-        });
 
         /*
-         - tell the user if a product was created
-         - tell the user if unable to create product
-         - button to go back to products list
-         - form to create a product
+         - tell the user if a user was created
+         - tell the user if unable to create user
+         - button to go back to users list
+         - form to create a user
          */
         return (
         <div>
         {
             this.state.successCreate== "Product was created." ?
         <div className='alert alert-success'>
-            Product was saved.
+            Usuario registrado exitosamente
         </div>
         : null
     }
@@ -106,7 +137,7 @@ window.CreateUserComponent = React.createClass({
         {
             this.state.successCreate == "Unable to create product." ?
         <div className='alert alert-danger'>
-            Unable to save product. Please try again.
+            Error al registrar usuario. Por favor intente nuevamente.
         </div>
         : null
         }
@@ -114,63 +145,106 @@ window.CreateUserComponent = React.createClass({
         <a href='#'
         onClick={() => this.props.changeAppMode('read')}
         className='btn btn-primary margin-bottom-1em'>
-            Ver Usuarios
+            Volver al listado
         </a>
 
         <form onSubmit={this.onSave}>
         <table className='table table-bordered table-hover'>
             <tbody>
             <tr>
-            <td>Name</td>
+            <td>Cédula</td>
             <td>
             <input
         type='text'
         className='form-control'
-        value={this.state.name}
+        value={this.state.cedula}
         required
-        onChange={this.onNameChange} />
+        onChange={this.onCedulaChange} />
         </td>
         </tr>
 
-        <tr>
-        <td>Estatus</td>
-        <td>
-        <select
-        onChange={this.onCategoryChange}
+            <tr>
+            <td>Nombre</td>
+            <td>
+            <input
+        type='text'
         className='form-control'
-        value={this.state.selectedCategoryId}>
-        <option value="-1">Select estatus...</option>
-        <option value="0">Sin Asignar</option>
-        <option value="1">Borrador</option>
-        <option value="2">Pdt Validar</option>
-            <option value="3">Correcciones</option>
-        </select>
+        value={this.state.combre}
+        required
+        onChange={this.onNombreChange} />
         </td>
         </tr>
 
         <tr>
-        <td>Price ($)</td>
+        <td>Apellido</td>
         <td>
         <input
-        type='number'
-        step="0.01"
+        type='text'
         className='form-control'
-        value={this.state.price}
+        value={this.state.apellido}
         required
-        onChange={this.onPriceChange}/>
+        onChange={this.onApellidoChange} />
         </td>
         </tr>
 
         <tr>
-        <td>Category</td>
+        <td>Teléfono</td>
+        <td>
+        <input
+        type='text'
+        className='form-control'
+        value={this.state.telefono}
+        required
+        onChange={this.onTelefonoChange} />
+        </td>
+        </tr>
+
+        <tr>
+        <td>Email</td>
+        <td>
+        <input
+        type='text'
+        className='form-control'
+        value={this.state.email}
+        required
+        onChange={this.onEmailChange} />
+        </td>
+        </tr>
+
+        <tr>
+        <td>Fecha de Nacimiento</td>
+        <td>
+        <input
+        type='text'
+        className='form-control'
+        value={this.state.fecha_nacimiento}
+        onChange={this.onFechaNacimientoChange} />
+        </td>
+        </tr>
+
+        <tr>
+        <td>Rol</td>
         <td>
         <select
-        onChange={this.onCategoryChange}
+        onChange={this.onRolChange}
         className='form-control'
-        value={this.state.selectedCategoryId}>
-        <option value="-1">Select category...</option>
-        {categoriesOptions}
+        value={this.state.rol}>
+        <option value="-1">Seleccione Rol...</option>
+        <option value="0">Administrador</option>
+        <option value="1">Redactor</option>
         </select>
+        </td>
+        </tr>
+
+            <tr>
+            <td>Fecha de Ingreso</td>
+            <td>
+            <input
+        type='text'
+        className='form-control'
+        value={this.state.fecha_ingreso}
+        required
+        onChange={this.onFechaIngresoChange} />
         </td>
         </tr>
 
@@ -179,7 +253,7 @@ window.CreateUserComponent = React.createClass({
         <td>
         <button
         className='btn btn-primary'
-        onClick={this.onSave}>Save</button>
+        onClick={this.onSave}>Registrar</button>
         </td>
         </tr>
         </tbody>

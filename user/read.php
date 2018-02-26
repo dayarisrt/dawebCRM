@@ -38,7 +38,7 @@ if($num>0){
             "id" => $id,
             "cedula" => $cedula,
             "nombre" => $nombre,
-            "apellido" => html_entity_decode($apellido),
+            "apellido" => ($apellido),
             "telefono" => $telefono,
             "fecha_nacimiento" => $fecha_nacimiento,
             "rol" => $rol,

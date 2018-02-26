@@ -8,6 +8,11 @@ window.UserTopActionsComponent = React.createClass({
         onClick={() => this.props.changeAppMode('createUser')}
         className='btn btn-primary margin-bottom-1em'> Crear Usuario
         </a>
+
+        <a href='#'
+        onClick={() => this.props.changeAppMode('readUser')}
+        className='btn btn-primary margin-bottom-1em'> Ver usuarios
+        </a>
         </div>
         );
     }

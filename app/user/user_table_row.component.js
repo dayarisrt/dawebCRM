@@ -11,18 +11,17 @@ window.UserRow = React.createClass({
         <td>{this.props.user.fecha_nacimiento}</td>
         <td>{this.props.user.rol}</td>
         <td>{this.props.user.fecha_ingreso}</td>
-        <td>{this.props.user.category_name}</td>
         <td>
         <a href='#'
-        onClick={() => this.props.changeAppMode('readOne', this.props.user.id)}
-        className='btn btn-info m-r-1em'> Ver
+        onClick={() => this.props.changeAppMode('readOneUser', this.props.user.id)}
+        className='btn btn-info m-r-1em'> Ver Detalle
         </a>
         <a href='#'
-        onClick={() => this.props.changeAppMode('update', this.props.user.id)}
+        onClick={() => this.props.changeAppMode('updateUser', this.props.user.id)}
         className='btn btn-primary m-r-1em'> Editar
             </a>
             <a
-        onClick={() => this.props.changeAppMode('delete', this.props.user.id)}
+        onClick={() => this.props.changeAppMode('deleteUser', this.props.user.id)}
         className='btn btn-danger'> Eliminar
             </a>
             </td>

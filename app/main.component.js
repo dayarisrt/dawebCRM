@@ -39,6 +39,12 @@ var MainApp = React.createClass({
         case 'delete':
         modeComponent = <DeleteProductComponent productId={this.state.productId} changeAppMode={this.changeAppMode}/>;
         break;
+        case 'readUser':
+        modeComponent = <ReadUsersComponent changeAppMode={this.changeAppMode}/>;
+        break;
+        case 'readOneUser':
+        modeComponent = <ReadOneUserComponent changeAppMode={this.changeAppMode}/>;
+        break;
         case 'createUser':
         modeComponent = <CreateUserComponent changeAppMode={this.changeAppMode}/>;
         break;

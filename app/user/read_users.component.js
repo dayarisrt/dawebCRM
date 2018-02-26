@@ -26,11 +26,11 @@ window.ReadUsersComponent = React.createClass({
     render: function() {
         // list of users
         var filteredUsers = this.state.users;
-        $('.page-header h1').text('Read Users');
+        $('.page-header h1').text('Usuarios');
 
         return (
             <div className='overflow-hidden'>
-            <TopActionsComponent changeAppMode={this.props.changeAppMode} />
+            <UserTopActionsComponent changeAppMode={this.props.changeAppMode} />
 
         <UsersTable
         users={filteredUsers}

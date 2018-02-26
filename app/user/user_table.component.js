@@ -27,6 +27,7 @@ window.UsersTable = React.createClass({
             <th>Fecha de Nacimiento</th>
             <th>Tipo de Usuario</th>
             <th>Fecha de Ingreso</th>
+            <th>Acción</th>
             </tr>
             </thead>
             <tbody>

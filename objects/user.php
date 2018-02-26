@@ -134,7 +134,7 @@ class User{
                 email = :email,
                 fecha_nacimiento = :fecha_nacimiento,
                 rol = :rol,
-                fecha_inreso = :fecha_ingreso
+                fecha_ingreso = :fecha_ingreso
             WHERE
                 id = :id";
 

@@ -23,13 +23,15 @@ window.ReadOneUserComponent = React.createClass({
 
         this.serverRequestUsr = $.get("http://localhost/api-php/user/read_one.php?id=" + userId,
             function (user) {
-                this.setState({category_name: user.category_name});
                 this.setState({id: user.id});
-                this.setState({cedila: user.cedula});
+                this.setState({cedula: user.cedula});
                 this.setState({nombre: user.nombre});
                 this.setState({apellido: user.apellido});
                 this.setState({telefono: user.telefono});
+                this.setState({email: user.email});
                 this.setState({fecha_nacimiento: user.fecha_nacimiento});
+                this.setState({rol: user.rol});
+                this.setState({fecha_ingreso: user.fecha_ingreso});
             }.bind(this));
 
         $('.page-header h1').text('Ver Usuario');
@@ -45,7 +47,7 @@ window.ReadOneUserComponent = React.createClass({
         return (
             <div>
             <a href='#'
-        onClick={() => this.props.changeAppMode('readUsers')}
+        onClick={() => this.props.changeAppMode('readUser')}
         className='btn btn-primary margin-bottom-1em'>
             Ver Usuarios
         </a>

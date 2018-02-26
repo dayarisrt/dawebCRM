@@ -4,35 +4,35 @@ window.UpdateUserComponent = React.createClass({
         // Get this product fields from the data attributes we set on the
         // #content div, using jQuery
         return {
-            categories: [],
-            selectedCategoryId: 0,
             id: 0,
-            name: '',
-            description: '',
-            price: 0,
+            cedula: '',
+            nombre: '',
+            apellido: '',
+            telefono: '',
+            email: '',
+            fecha_nacimiento: '',
+            rol: -1,
+            fecha_nacimiento: '',
             successUpdate: null
         };
     },
 
 // on mount, fetch all categories and one product data to stored them as this component's state
     componentDidMount: function(){
-        // read categories
-        this.serverRequestCat = $.get("http://localhost/api-php/category/read.php",
-            function (categories) {
-                this.setState({
-                    categories: categories.records
-                });
-            }.bind(this));
 
-        // read one product data
-        var productId = this.props.productId;
-        this.serverRequestProd = $.get("http://localhost/api-php/product/read_one.php?id=" + productId,
-            function (product) {
-                this.setState({selectedCategoryId: product.category_id});
-                this.setState({id: product.id});
-                this.setState({name: product.name});
-                this.setState({description: product.description});
-                this.setState({price: product.price});
+        // read one user data
+        var userId = this.props.userId;
+        this.serverRequestUsr = $.get("http://localhost/api-php/user/read_one.php?id=" + userId,
+            function (user) {
+                this.setState({id: user.id});
+                this.setState({cedula: user.cedula});
+                this.setState({nombre: user.nombre});
+                this.setState({apellido: user.apellido});
+                this.setState({telefono: user.telefono});
+                this.setState({email: user.email});
+                this.setState({fecha_nacimiento: user.fecha_nacimiento});
+                this.setState({rol: user.rol});
+                this.setState({fecha_ingreso: user.fecha_ingreso});
             }.bind(this));
 
         $('.page-header h1').text('Modificar Usuario');
@@ -40,28 +40,47 @@ window.UpdateUserComponent = React.createClass({
 
 // on unmount, kill categories fetching in case the request is still pending
     componentWillUnmount: function() {
-        this.serverRequestCat.abort();
         this.serverRequestProd.abort();
     },
 
-// handle category change
-    onCategoryChange: function(e){
-        this.setState({selectedCategoryId: e.target.value});
+// handle cedula change
+    onCedulaChange: function(e){
+        this.setState({cedula: e.target.value});
     },
 
-// handle name change
-    onNameChange: function(e){
-        this.setState({name: e.target.value});
+// handle nombre change
+    onNombreChange: function(e){
+        this.setState({nombre: e.target.value});
     },
 
-// handle description change
-    onDescriptionChange: function(e){
-        this.setState({description: e.target.value});
+// handle apellido change
+    onApellidoChange: function(e){
+        this.setState({apellido: e.target.value});
     },
 
-// handle price change
-    onPriceChange: function(e){
-        this.setState({price: e.target.value});
+    // handle telefono change
+    onTelefonoChange: function(e){
+        this.setState({telefono: e.target.value});
+    },
+
+    // handle email change
+    onEmailChange: function(e){
+        this.setState({email: e.target.value});
+    },
+
+    // handle fecha de nacimiento change
+    onFechaNacimientoChange: function(e){
+        this.setState({fecha_nacimiento: e.target.value});
+    },
+
+    // handle rol change
+    onRolChange: function(e){
+        this.setState({rol: e.target.value});
+    },
+
+    // handle fecha de ingreso change
+    onFechaIngresoChange: function(e){
+        this.setState({fecha_ingreso: e.target.value});
     },
 
 // handle save changes button clicked
@@ -70,15 +89,18 @@ window.UpdateUserComponent = React.createClass({
         // data in the form
         var form_data={
             id: this.state.id,
-            name: this.state.name,
-            description: this.state.description,
-            price: this.state.price,
-            category_id: this.state.selectedCategoryId
+            cedula: this.state.cedula,
+            nombre: this.state.nombre,
+            apellido: this.state.apellido,
+            telefono: this.state.telefono,
+            fecha_nacimiento: this.state.fecha_nacimiento,
+            rol: this.state.rol,
+            fecha_ingreso: this.state.fecha_ingreso,
         };
 
         // submit form data to api
         $.ajax({
-            url: "http://localhost/api-php/product/update.php",
+            url: "http://localhost/api-php/user/update.php",
             type : "POST",
             contentType : 'application/json',
             data : JSON.stringify(form_data),
@@ -97,18 +119,13 @@ window.UpdateUserComponent = React.createClass({
 
     render: function() {
         // make categories as option for the select tag.
-        var categoriesOptions = this.state.categories.map(function(category){
-            return (
-                <option key={category.id} value={category.id}>{category.name}</option>
-            );
-        });
 
         return (
         <div>
         {
             this.state.successUpdate == "Product was updated." ?
         <div className='alert alert-success'>
-            Product was updated.
+            Usuario creado exitosamenete.
         </div>
         : null
     }
@@ -116,55 +133,104 @@ window.UpdateUserComponent = React.createClass({
         {
             this.state.successUpdate == "Unable to update product." ?
         <div className='alert alert-danger'>
-            Unable to update product. Please try again.
+            No se pudo modificar el usuario. Por favor intente nuevamente.
         </div>
         : null
         }
 
         <a href='#'
-        onClick={() => this.props.changeAppMode('read')}
+        onClick={() => this.props.changeAppMode('readUser')}
         className='btn btn-primary margin-bottom-1em'>
-            Read Products
+            Ver Usuarios
         </a>
 
         <form onSubmit={this.onSave}>
         <table className='table table-bordered table-hover'>
             <tbody>
             <tr>
-            <td>Name</td>
+            <td>Nombre</td>
             <td>
             <input
         type='text'
         className='form-control'
-        value={this.state.name}
+        value={this.state.nombre}
         required
-        onChange={this.onNameChange} />
+        onChange={this.onNombreChange} />
         </td>
         </tr>
 
         <tr>
-        <td>Description</td>
+        <td>Apellido</td>
         <td>
         <textarea
         type='text'
         className='form-control'
         required
-        value={this.state.description}
-        onChange={this.onDescriptionChange}>
+        value={this.state.apellido}
+        onChange={this.onApellidoChange}>
         </textarea>
         </td>
         </tr>
 
         <tr>
-        <td>Categoría</td>
+        <td>Teléfono</td>
+        <td>
+        <input
+        type='text'
+        className='form-control'
+        value={this.state.telefono}
+        required
+        onChange={this.onTelefonoChange} />
+        </td>
+        </tr>
+
+        <tr>
+        <td>Email</td>
+        <td>
+        <input
+        type='text'
+        className='form-control'
+        value={this.state.email}
+        required
+        onChange={this.onEmailChange} />
+        </td>
+        </tr>
+
+        <tr>
+        <td>Fecha de Nacimiento</td>
+        <td>
+        <input
+        type='text'
+        className='form-control'
+        value={this.state.fecha_nacimiento}
+        onChange={this.onFechaNacimientoChange} />
+        </td>
+        </tr>
+
+        <tr>
+        <td>Rol</td>
         <td>
         <select
-        onChange={this.onCategoryChange}
+        onChange={this.onRolChange}
         className='form-control'
-        value={this.state.selectedCategoryId}>
-        <option value="-1">Select category...</option>
-        {categoriesOptions}
+        value={this.state.rol}>
+            <option value="-1">Seleccione un Rol...</option>
+            <option value="-1">Seleccione Rol...</option>
+            <option value="0">Administrador</option>
+            <option value="1">Redactor</option>
         </select>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Fecha de Ingreso</td>
+        <td>
+        <input
+        type='text'
+        className='form-control'
+        value={this.state.fecha_ingreso}
+        required
+        onChange={this.onFechaIngresoChange} />
         </td>
         </tr>
 
@@ -173,7 +239,7 @@ window.UpdateUserComponent = React.createClass({
         <td>
         <button
         className='btn btn-primary'
-        onClick={this.onSave}>Save Changes</button>
+        onClick={this.onSave}>Guardar Cambios</button>
         </td>
         </tr>
         </tbody>

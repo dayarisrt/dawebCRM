@@ -14,7 +14,7 @@ include_once '../objects/user.php';
 $database = new Database();
 $db = $database->getConnection();
 
-// prepare product object
+// prepare user object
 $user = new User($db);
 
 // get id of user to be edited

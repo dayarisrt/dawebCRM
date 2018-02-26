@@ -14,13 +14,13 @@ $database = new Database();
 $db = $database->getConnection();
 
 // prepare user object
-$product = new User($db);
+$user = new User($db);
 
 // set ID property of user to be edited
 $user->id = isset($_GET['id']) ? $_GET['id'] : die();
 
 // read the details of user to be edited
-$product->readOne();
+$user->readOne();
 
 // create array
 $user_arr = array(
@@ -35,7 +35,6 @@ $user_arr = array(
     "fecha_ingreso" =>  $user->fecha_ingreso
 
 );
-
 // make it json format
 print_r(json_encode($user_arr));
 ?>

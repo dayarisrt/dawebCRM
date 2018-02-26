@@ -33,14 +33,14 @@ $user->fecha_ingreso = $data->fecha_ingreso;
 // create the user
 if($user->create()){
     echo '{';
-    echo '"message": "User was created."';
+    echo '"message": "Usuario creado con éxio."';
     echo '}';
 }
 
 // if unable to create the product, tell the user
 else{
     echo '{';
-    echo '"message": "Unable to create user."';
+    echo '"message": "No se pudo registrar el usuario."';
     echo '}';
 }
 ?>

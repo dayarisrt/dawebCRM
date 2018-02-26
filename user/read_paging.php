@@ -58,7 +58,7 @@ if($num>0){
 
     // include paging
     $total_rows=$user->count();
-    $page_url="{$home_url}product/read_paging.php?";
+    $page_url="{$home_url}user/read_paging.php?";
     $paging=$utilities->getPaging($page, $total_rows, $records_per_page, $page_url);
     $users_arr["paging"]=$paging;
 
@@ -67,7 +67,7 @@ if($num>0){
 
 else{
     echo json_encode(
-        array("message" => "No users found.")
+        array("message" => "No hay usuarios registrados.")
     );
 }
 ?>
